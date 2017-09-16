@@ -1,7 +1,7 @@
 const request = require('request');
 
 // アクセストークン取得
-functio getAccessToken(callback) {
+function getAccessToken(callback) {
     let headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/jwt',
@@ -14,7 +14,7 @@ functio getAccessToken(callback) {
         json: true
     };
 
-    request(options, function (err, res) {
+    request(options, function(err, res) {
         if (err) {
             console.log(err);
             callback(err, null);
@@ -43,7 +43,7 @@ function translate2(token, text, callback) {
         json: true
     };
 
-    request(options, function (err, res) {
+    request(options, function(err, res) {
         if (err) {
             console.log(err);
             callback(err, null);
@@ -57,7 +57,7 @@ function translate2(token, text, callback) {
 export class translate {
     static translateGo(text, callback) {
 
-        getAccessToken(function (err, token) {
+        getAccessToken(function(err, token) {
             if (!err) {
                 // console.log(token);
                 translate2(token, text, (err, translated) => {

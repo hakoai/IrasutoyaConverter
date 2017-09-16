@@ -6,4 +6,4 @@ install:
   - npm install -g typescript typescript-formatter
   - npm install
 
-script: bash ./build.sh
+script: 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./build.sh; fi'
