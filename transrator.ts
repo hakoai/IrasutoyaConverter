@@ -1,11 +1,11 @@
 const request = require('request');
 
 // アクセストークン取得
-function getAccessToken(callback) {
+functio getAccessToken(callback) {
     let headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/jwt',
-        'Ocp-Apim-Subscription-Key': 'ほげほげ'
+'Ocp-Apim-Subscription-Key': 'ほげほげ2'
     };
     let options = {
         url: 'https://api.cognitive.microsoft.com/sts/v1.0/issueToken',
@@ -30,8 +30,8 @@ function translate2(token, text, callback) {
         from = 'en',
         to = 'ja';
 
-    let url = base_url + '?appid=' + appid + 
-                '&text=' + text + '&from=' + from + '&to=' + to;
+    let url = base_url + '?appid=' + appid +
+        '&text=' + text + '&from=' + from + '&to=' + to;
     let headers = {
         'Accept': 'application/xml'
     };
@@ -54,7 +54,7 @@ function translate2(token, text, callback) {
 }
 
 // 実行
-export class translate{
+export class translate {
     static translateGo(text, callback) {
 
         getAccessToken(function (err, token) {
