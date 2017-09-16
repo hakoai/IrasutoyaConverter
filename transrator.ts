@@ -14,7 +14,7 @@ function getAccessToken(callback) {
         json: true
     };
 
-    request(options, function (err, res) {
+    request(options, function(err, res) {
         if (err) {
             console.log(err);
             callback(err, null);
@@ -30,8 +30,8 @@ function translate2(token, text, callback) {
         from = 'en',
         to = 'ja';
 
-    let url = base_url + '?appid=' + appid + 
-                '&text=' + text + '&from=' + from + '&to=' + to;
+    let url = base_url + '?appid=' + appid +
+        '&text=' + text + '&from=' + from + '&to=' + to;
     let headers = {
         'Accept': 'application/xml'
     };
@@ -43,7 +43,7 @@ function translate2(token, text, callback) {
         json: true
     };
 
-    request(options, function (err, res) {
+    request(options, function(err, res) {
         if (err) {
             console.log(err);
             callback(err, null);
@@ -54,10 +54,10 @@ function translate2(token, text, callback) {
 }
 
 // 実行
-export class translate{
+export class translate {
     static translateGo(text, callback) {
 
-        getAccessToken(function (err, token) {
+        getAccessToken(function(err, token) {
             if (!err) {
                 // console.log(token);
                 translate2(token, text, (err, translated) => {
