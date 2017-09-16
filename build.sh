@@ -20,7 +20,7 @@ SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
 
 git checkout -b $TRAVIS_PULL_REQUEST_BRANCH
 git add -A .
-git commit -m "Auto bluild: ${SHA}"
+git commit -m "Auto build: ${SHA}"
 
 openssl aes-256-cbc -K $encrypted_d9a5198f385a_key -iv $encrypted_d9a5198f385a_iv -in deploy_key.enc -out deploy_key -d
 chmod 600 ./deploy_key
