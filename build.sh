@@ -1,13 +1,16 @@
 #!/bin/bash
 set -e
 
+# フォーマット & ビルド
 tsfmt -r
 tsc
 
+# ファイル差分がなければ正常終了
 if git diff --quiet; then
     exit 0
 fi
 
+# ファイル差分がある場合は変更をpushする
 git config user.name "hakoai"
 git config user.email "hk--76@qa2.so-net.ne.jp"
 SHA=`git rev-parse --verify HEAD`
