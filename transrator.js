@@ -6,7 +6,7 @@ function getAccessToken(callback) {
     var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/jwt',
-        'Ocp-Apim-Subscription-Key': process.env.TRANSLATOR_API_KEY2
+        'Ocp-Apim-Subscription-Key': process.env.TRANSLATOR_API_KEY_2
     };
     var options = {
         url: 'https://api.cognitive.microsoft.com/sts/v1.0/issueToken',
