@@ -4,12 +4,11 @@ var options = {
   "method": "POST",
   "hostname": "westus.api.cognitive.microsoft.com",
   "port": null,
-  "path": "/vision/v1.0/analyze?oauth_consumer_key=&ほげほげ",
+  "path": "/vision/v1.0/analyze?oauth_consumer_key=" + process.env.COMPUTER_VISION_API_KEY1,
   "headers": {
     "content-type": "application/json",
-    "ocp-apim-subscription-key": "ほげほげ",
+    "ocp-apim-subscription-key": process.env.COMPUTER_VISION_API_KEY2,
     "cache-control": "no-cache",
-    "postman-token": "ほげほげ"
   }
 };
 
@@ -24,7 +23,8 @@ function getImageTags(imageURL, callback) {
     res.on("end", function () {
       var body = Buffer.concat(chunks);
       var data = JSON.parse(body);
-       var resultMap = data["tags"].map(element => element["name"])
+      var resultMap = Array.prototype.concat.apply([],
+        data["categories"].map(category => category.name.split('_')));
       callback(resultMap);
     });
   });
