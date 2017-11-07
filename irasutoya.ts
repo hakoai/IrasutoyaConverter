@@ -3,6 +3,8 @@ import { Irasuto } from 'node-irasutoya';
 export class Irasutoya {
     public description: string;
     public url: string;
+    public name: string;
+    public detail_url: string;
 }
 
 const readFileSync = require('fs').readFileSync as (filename: string, encoding: string) => string;

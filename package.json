@@ -4,15 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node --require async-to-gen/register app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^8.0.26",
+    "async-to-gen": "^1.3.3",
     "botbuilder": "^3.9.1",
     "fs": "0.0.1-security",
     "node-irasutoya": "^2.0.3",
     "restify": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/request": "^2.0.7",
+    "@types/node": "^8.0.49"
   }
 }

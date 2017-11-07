@@ -1,7 +1,7 @@
-const request = require('request');
+import * as request from 'request'
 
 // アクセストークン取得
-function getAccessToken(callback) {
+async function getAccessToken() {
     let headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/jwt',
@@ -13,18 +13,19 @@ function getAccessToken(callback) {
         headers: headers,
         json: true
     };
-
-    request(options, function(err, res) {
-        if (err) {
-            console.log(err);
-            callback(err, null);
-        } else
-            callback(null, res.body);
+    return new Promise<string>((resolve, reject) =>{
+        request(options, function(err, res) {
+            if (err) {
+                reject(err);
+            } else
+                resolve(res.body as string);
+        });
     });
+    
 }
 
 // 翻訳 (日本語 -> 英語)
-function translate2(token, text, callback) {
+async function translate2(token :string, text :string) {
     let base_url = 'https://api.microsofttranslator.com/v2/http.svc/Translate',
         appid = 'Bearer ' + token,
         from = 'en',
@@ -42,29 +43,22 @@ function translate2(token, text, callback) {
         headers: headers,
         json: true
     };
-
-    request(options, function(err, res) {
-        if (err) {
-            console.log(err);
-            callback(err, null);
-        } else
-            callback(null, res.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''));
-    });
+    return new Promise<string>((resolve, reject) =>{
+        request(options, function(err, res) {
+            if (err) {
+                reject(err);
+            } else
+                resolve(res.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''));
+        });
+    })
+    
 
 }
 
 // 実行
 export class translate {
-    static translateGo(text, callback) {
-
-        getAccessToken(function(err, token) {
-            if (!err) {
-                // console.log(token);
-                translate2(token, text, (err, translated) => {
-                    if (!err)
-                        callback(translated);
-                });
-            }
-        });
+    static async translateGo(text:string) {
+        let token = await getAccessToken();
+        return await translate2(token, text);
     }
 }
