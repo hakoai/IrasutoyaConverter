@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const request = require("request");
+const rp = require("request-promise-native");
 // アクセストークン取得
 async function getAccessToken() {
     let headers = {
@@ -14,15 +14,8 @@ async function getAccessToken() {
         headers: headers,
         json: true
     };
-    return new Promise((resolve, reject) => {
-        request(options, function (err, res) {
-            if (err) {
-                reject(err);
-            }
-            else
-                resolve(res.body);
-        });
-    });
+    let result = await rp(options);
+    return result.body;
 }
 // 翻訳 (日本語 -> 英語)
 async function translate2(token, text) {
@@ -38,15 +31,8 @@ async function translate2(token, text) {
         headers: headers,
         json: true
     };
-    return new Promise((resolve, reject) => {
-        request(options, function (err, res) {
-            if (err) {
-                reject(err);
-            }
-            else
-                resolve(res.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''));
-        });
-    });
+    let result = await rp(options);
+    return result.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '');
 }
 // 実行
 class translate {

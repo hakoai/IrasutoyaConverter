@@ -14,10 +14,13 @@
     "botbuilder": "^3.9.1",
     "fs": "0.0.1-security",
     "node-irasutoya": "^2.0.3",
+    "request": "^2.83.0",
+    "request-promise-native": "^1.0.5",
     "restify": "^5.2.0"
   },
   "devDependencies": {
     "@types/request": "^2.0.7",
+    "@types/request-promise-native": "^1.0.10",
     "@types/node": "^8.0.49"
   }
 }

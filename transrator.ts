@@ -1,4 +1,4 @@
-import * as request from 'request'
+import * as rp from 'request-promise-native'
 
 // アクセストークン取得
 async function getAccessToken() {
@@ -13,19 +13,12 @@ async function getAccessToken() {
         headers: headers,
         json: true
     };
-    return new Promise<string>((resolve, reject) =>{
-        request(options, function(err, res) {
-            if (err) {
-                reject(err);
-            } else
-                resolve(res.body as string);
-        });
-    });
-    
+    let result = await rp(options);
+    return result.body as string;
 }
 
 // 翻訳 (日本語 -> 英語)
-async function translate2(token :string, text :string) {
+async function translate2(token: string, text: string) {
     let base_url = 'https://api.microsofttranslator.com/v2/http.svc/Translate',
         appid = 'Bearer ' + token,
         from = 'en',
@@ -43,21 +36,13 @@ async function translate2(token :string, text :string) {
         headers: headers,
         json: true
     };
-    return new Promise<string>((resolve, reject) =>{
-        request(options, function(err, res) {
-            if (err) {
-                reject(err);
-            } else
-                resolve(res.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''));
-        });
-    })
-    
-
+    let result = await rp(options);
+    return result.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '');
 }
 
 // 実行
 export class translate {
-    static async translateGo(text:string) {
+    static async translateGo(text: string) {
         let token = await getAccessToken();
         return await translate2(token, text);
     }
