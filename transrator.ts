@@ -38,6 +38,7 @@ async function translate2(token: string, text: string) {
     };
     let result = await rp(options);
     return result.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '');
+
 }
 
 // 実行
