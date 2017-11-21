@@ -1,8 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const rp = require("request-promise-native");
+let accessToken;
 // アクセストークン取得
 async function getAccessToken() {
+    if (accessToken) {
+        return accessToken;
+    }
     let headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/jwt',
@@ -14,8 +18,8 @@ async function getAccessToken() {
         headers: headers,
         json: true
     };
-    let result = await rp(options);
-    return result;
+    accessToken = await rp(options);
+    return accessToken;
 }
 // 翻訳 (日本語 -> 英語)
 async function translate2(token, text) {

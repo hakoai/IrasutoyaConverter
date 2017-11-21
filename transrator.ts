@@ -1,7 +1,12 @@
 import * as rp from 'request-promise-native'
 
+let accessToken: string;
 // アクセストークン取得
 async function getAccessToken() {
+    if (accessToken) {
+        return accessToken
+    }
+
     let headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/jwt',
@@ -13,8 +18,8 @@ async function getAccessToken() {
         headers: headers,
         json: true
     };
-    let result = await rp(options);
-    return result as string;
+    accessToken = await rp(options);
+    return accessToken;
 }
 
 // 翻訳 (日本語 -> 英語)
