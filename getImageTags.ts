@@ -15,5 +15,5 @@ let options = {
 export async function getImageTags(imageURL: string) {
     let result = await rp(options);
     let data = JSON.parse(result.body);
-    return data["tags"].map(element => element["name"]);
+    return data["tags"].map(element => element["name"]) as string[];
 }

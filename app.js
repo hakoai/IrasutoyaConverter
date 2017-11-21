@@ -24,7 +24,7 @@ let bot = new builder.UniversalBot(connector, async function (session) {
         let tags = await getImageTags_1.getImageTags(session.message.text);
         let result = await Promise.all(tags.slice(0, 3).map(async (word) => {
             let wordJa = await transrator_1.translate.translateGo(word);
-            return await idb.query(wordJa).slice(0, 2);
+            return idb.query(wordJa).slice(0, 2);
         }));
         [].concat(result).map((r) => {
             session.send("%s があったよ～。", r.name);
