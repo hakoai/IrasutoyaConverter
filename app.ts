@@ -7,7 +7,7 @@ import { translate } from './transrator'
 
 // Setup Restify Server
 let server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
+server.listen(process.env.port || process.env.PORT || 3978, function() {
     console.log('%s listening to %s', server.name, server.url);
 });
 
@@ -22,7 +22,7 @@ server.post('/api/messages', connector.listen());
 
 let idb = new irasutoya.IrasutoyaDb();
 // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
-let bot = new builder.UniversalBot(connector, async function (session) {
+let bot = new builder.UniversalBot(connector, async function(session) {
     try {
         let tags = await getImageTags(session.message.text);
         let result = await Promise.all(tags.slice(0, 3).map(async (word) => {
