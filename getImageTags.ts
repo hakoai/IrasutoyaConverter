@@ -1,7 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const rp = require("request-promise-native");
-async function getImageTags(imageURL) {
+import * as rp from 'request-promise-native'
+
+export async function getImageTags(imageURL: string) {
     let options = {
         method: "POST",
         url: "https://westus.api.cognitive.microsoft.com" + "/vision/v1.0/analyze?visualFeatures=Tags&oauth_consumer_key=" + process.env.COMPUTER_VISION_API_KEY1,
@@ -15,6 +14,5 @@ async function getImageTags(imageURL) {
         }
     };
     let data = await rp(options);
-    return data["tags"].map(element => element["name"]);
+    return data["tags"].map(element => element["name"]) as string[];
 }
-exports.getImageTags = getImageTags;

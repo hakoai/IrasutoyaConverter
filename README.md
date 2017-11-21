@@ -8,7 +8,7 @@ export COMPUTER_VISION_API_KEY1=********
 export COMPUTER_VISION_API_KEY2=********
 
 npm install
-node app.js
+npm start
 ```
 
 ### Setting bot emulator
