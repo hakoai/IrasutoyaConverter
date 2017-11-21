@@ -18,9 +18,11 @@ let connector = new builder.ChatConnector({
 // Listen for messages from users 
 server.post('/api/messages', connector.listen());
 let idb = new irasutoya.IrasutoyaDb();
+console.log("up");
 // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
 let bot = new builder.UniversalBot(connector, async function (session) {
     try {
+        console.log("get");
         let tags = await getImageTags_1.getImageTags(session.message.text);
         let result = await Promise.all(tags.slice(0, 3).map(async (word) => {
             let wordJa = await transrator_1.translate.translateGo(word);
