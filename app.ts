@@ -21,17 +21,15 @@ let connector = new builder.ChatConnector({
 server.post('/api/messages', connector.listen());
 
 let idb = new irasutoya.IrasutoyaDb();
-console.log("up")
 // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
 let bot = new builder.UniversalBot(connector, async function (session) {
     try {
-        console.log("get")
         let tags = await getImageTags(session.message.text);
         let result = await Promise.all(tags.slice(0, 3).map(async (word) => {
             let wordJa = await translate.translateGo(word);
             return idb.query(wordJa).slice(0, 2);
         }));
-        [].concat(result).map((r) => {
+        [].concat.apply([], result).map((r) => {
             session.send("%s があったよ～。", r.name);
             session.send("%s", r.detail_url);
         });

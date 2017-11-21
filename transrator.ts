@@ -14,7 +14,7 @@ async function getAccessToken() {
         json: true
     };
     let result = await rp(options);
-    return result.body as string;
+    return result as string;
 }
 
 // 翻訳 (日本語 -> 英語)
@@ -37,7 +37,7 @@ async function translate2(token: string, text: string) {
         json: true
     };
     let result = await rp(options);
-    return result.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '');
+    return result.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '');
 
 }
 
@@ -45,6 +45,7 @@ async function translate2(token: string, text: string) {
 export class translate {
     static async translateGo(text: string) {
         let token = await getAccessToken();
-        return await translate2(token, text);
+        let result = await translate2(token, text);
+        return result;
     }
 }

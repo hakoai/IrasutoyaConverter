@@ -15,7 +15,7 @@ async function getAccessToken() {
         json: true
     };
     let result = await rp(options);
-    return result.body;
+    return result;
 }
 // 翻訳 (日本語 -> 英語)
 async function translate2(token, text) {
@@ -32,13 +32,14 @@ async function translate2(token, text) {
         json: true
     };
     let result = await rp(options);
-    return result.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '');
+    return result.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '');
 }
 // 実行
 class translate {
     static async translateGo(text) {
         let token = await getAccessToken();
-        return await translate2(token, text);
+        let result = await translate2(token, text);
+        return result;
     }
 }
 exports.translate = translate;
