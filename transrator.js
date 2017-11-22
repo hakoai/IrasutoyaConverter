@@ -1,66 +1,45 @@
 "use strict";
-exports.__esModule = true;
-var request = require('request');
+Object.defineProperty(exports, "__esModule", { value: true });
+const rp = require("request-promise-native");
 // アクセストークン取得
-function getAccessToken(callback) {
-    var headers = {
+async function getAccessToken() {
+    let headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/jwt',
         'Ocp-Apim-Subscription-Key': process.env.TRANSLATOR_API_KEY2
     };
-    var options = {
+    let options = {
         url: 'https://api.cognitive.microsoft.com/sts/v1.0/issueToken',
         method: 'POST',
         headers: headers,
         json: true
     };
-    request(options, function (err, res) {
-        if (err) {
-            console.log(err);
-            callback(err, null);
-        }
-        else
-            callback(null, res.body);
-    });
+    let result = await rp(options);
+    return result;
 }
 // 翻訳 (日本語 -> 英語)
-function translate2(token, text, callback) {
-    var base_url = 'https://api.microsofttranslator.com/v2/http.svc/Translate', appid = 'Bearer ' + token, from = 'en', to = 'ja';
-    var url = base_url + '?appid=' + appid +
+async function translate2(token, text) {
+    let base_url = 'https://api.microsofttranslator.com/v2/http.svc/Translate', appid = 'Bearer ' + token, from = 'en', to = 'ja';
+    let url = base_url + '?appid=' + appid +
         '&text=' + text + '&from=' + from + '&to=' + to;
-    var headers = {
+    let headers = {
         'Accept': 'application/xml'
     };
-    var options = {
+    let options = {
         url: encodeURI(url),
         method: 'get',
         headers: headers,
         json: true
     };
-    request(options, function (err, res) {
-        if (err) {
-            console.log(err);
-            callback(err, null);
-        }
-        else
-            callback(null, res.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''));
-    });
+    let result = await rp(options);
+    return result.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '');
 }
 // 実行
-var translate = /** @class */ (function () {
-    function translate() {
+class translate {
+    static async translateGo(text) {
+        let token = await getAccessToken();
+        let result = await translate2(token, text);
+        return result;
     }
-    translate.translateGo = function (text, callback) {
-        getAccessToken(function (err, token) {
-            if (!err) {
-                // console.log(token);
-                translate2(token, text, function (err, translated) {
-                    if (!err)
-                        callback(translated);
-                });
-            }
-        });
-    };
-    return translate;
-}());
+}
 exports.translate = translate;
