@@ -21,13 +21,14 @@ let idb = new irasutoya.IrasutoyaDb();
 // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
 let bot = new builder.UniversalBot(connector, async function (session) {
     try {
+        session.send("%s を受け取ったよ", session.message.text);
         let tags = await getImageTags_1.getImageTags(session.message.text);
         let result = await Promise.all(tags.slice(0, 3).map(async (word) => {
             let wordJa = await transrator_1.translate.translateGo(word);
-            return idb.query(wordJa).slice(0, 2);
+            return idb.query(wordJa).slice(0, 2).map((r) => [wordJa, r]);
         }));
-        [].concat.apply([], result).map((r) => {
-            session.send("%s があったよ～。", r.name);
+        [].concat.apply([], result).map(([keyword, r]) => {
+            session.send("%s で検索したよ。%s があったよ～。", keyword, r.name);
             session.send("%s", r.detail_url);
         });
     }
