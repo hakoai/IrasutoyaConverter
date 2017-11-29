@@ -33,8 +33,8 @@ let bot = new builder.UniversalBot(connector, async function(session) {
             return idb.query(wordJa).slice(0, 2).map((r) => [wordJa, r]);
         }));
         [].concat.apply([], result).map(([keyword, r]) => {
-            session.send("%s で検索したよ。%s があったよ～。", keyword, r.name);
-            session.send("%s", r.detail_url);
+            session.send("%s で検索したよ。%s があったよ～。%s", keyword, r.name, r.detail_url);
+            session.send("%s", r.image_url);
         });
     } catch (e) {
         console.log(e);
