@@ -22,7 +22,9 @@ let idb = new irasutoya.IrasutoyaDb();
 let bot = new builder.UniversalBot(connector, async function (session) {
     try {
         session.send("%s を受け取ったよ", session.message.text);
-        let tags = await getImageTags_1.getImageTags(session.message.text);
+        // Slackから受け取ったメッセージはURLが<>で囲まれるためトリミングを行います
+        let url = session.message.text.replace(/(^<)|(>$)/g, "");
+        let tags = await getImageTags_1.getImageTags(url);
         let result = await Promise.all(tags.slice(0, 3).map(async (word) => {
             let wordJa = await transrator_1.translate.translateGo(word);
             return idb.query(wordJa).slice(0, 2).map((r) => [wordJa, r]);
